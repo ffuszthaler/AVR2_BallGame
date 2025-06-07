@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ARTrackedImageManager: {fileID: 699319497}
-  PrefabToSpawn: {fileID: 7096383605931608776, guid: 49f5c2ebb792bfc47a2e4736ba264916, type: 3}
+  PrefabToSpawn: {fileID: 936524217274499584, guid: 6056c8e98f8d3a5438153b1160ed4334, type: 3}
   targetMarkerName: ar_marker
 --- !u!1 &832575517
 GameObject:

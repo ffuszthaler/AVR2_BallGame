@@ -56,8 +56,8 @@ public class ARLabyrinthManager : MonoBehaviour
                 }
 
                 GameObject spawnedObject = Instantiate(PrefabToSpawn, addedImage.transform);
-                spawnedObject.name = $"Spawned_{addedImage.referenceImage.name}"; // Give it a descriptive name in the Hierarchy
-
+                spawnedObject.name = $"Spawned_{addedImage.referenceImage.name}";
+                
                 SpawnedObjects.Add(addedImage.referenceImage.name, spawnedObject);
             }
         }
