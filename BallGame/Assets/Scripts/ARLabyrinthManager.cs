@@ -11,7 +11,7 @@ public class ARLabyrinthManager : MonoBehaviour
 
     public string targetMarkerName = "MyTargetMarker";
 
-    private Dictionary<string, GameObject> SpawnedObjects = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> spawnedObjects = new Dictionary<string, GameObject>();
 
     void OnEnable()
     {
@@ -36,7 +36,7 @@ public class ARLabyrinthManager : MonoBehaviour
 
     void OnDisable()
     {
-        // Unsubscribe from the event to prevent memory leaks and ensure proper cleanup.
+        // unsubscribe from the event to prevent memory leaks and ensure proper cleanup.
         if (ARTrackedImageManager != null)
         {
             ARTrackedImageManager.trackablesChanged.AddListener(OnTrackablesChanged);
@@ -45,31 +45,51 @@ public class ARLabyrinthManager : MonoBehaviour
 
     private void OnTrackablesChanged(ARTrackablesChangedEventArgs<ARTrackedImage> eventArgs)
     {
-        // Handle newly added (detected) images
+        // handle newly added (detected) images
         foreach (var addedImage in eventArgs.added)
         {
             if (addedImage.referenceImage.name == targetMarkerName)
             {
-                if (SpawnedObjects.ContainsKey(addedImage.referenceImage.name))
+                if (spawnedObjects.ContainsKey(addedImage.referenceImage.name))
                 {
                     continue;
                 }
 
                 GameObject spawnedObject = Instantiate(PrefabToSpawn, addedImage.transform);
                 spawnedObject.name = $"Spawned_{addedImage.referenceImage.name}";
-                
-                SpawnedObjects.Add(addedImage.referenceImage.name, spawnedObject);
+
+                spawnedObjects.Add(addedImage.referenceImage.name, spawnedObject);
+
+                // add ball logic to game manager
+                BallLogic spawnedBallLogic = spawnedObject.GetComponentInChildren<BallLogic>();
+                if (spawnedBallLogic != null)
+                {
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.SetBallLogic(spawnedBallLogic);
+                        Debug.Log("Passed BallLogic to GameManager.");
+                    }
+                    else
+                    {
+                        Debug.LogError("GameManager not found.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("BallLogic script not found.");
+                }
             }
         }
 
-        // Handle updated images (e.g., marker moved, tracking quality changed)
+        // handle updated images (e.g., marker moved, tracking quality changed)
         foreach (var updatedImage in eventArgs.updated)
         {
-            if (SpawnedObjects.ContainsKey(updatedImage.referenceImage.name))
+            if (spawnedObjects.ContainsKey(updatedImage.referenceImage.name))
             {
                 if (updatedImage.trackingState == TrackingState.Limited)
                 {
-                    Debug.LogWarning($"Marker '{updatedImage.referenceImage.name}' tracking is limited. Content might flicker.");
+                    Debug.LogWarning(
+                        $"Marker '{updatedImage.referenceImage.name}' tracking is limited. Content might flicker.");
                 }
             }
         }
