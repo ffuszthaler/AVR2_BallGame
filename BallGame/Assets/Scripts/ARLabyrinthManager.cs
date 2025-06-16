@@ -88,8 +88,8 @@ public class ARLabyrinthManager : MonoBehaviour
             {
                 if (updatedImage.trackingState == TrackingState.Limited)
                 {
-                    Debug.LogWarning(
-                        $"Marker '{updatedImage.referenceImage.name}' tracking is limited. Content might flicker.");
+                    // Debug.LogWarning(
+                    //     $"Marker '{updatedImage.referenceImage.name}' tracking is limited. Content might flicker.");
                 }
             }
         }
