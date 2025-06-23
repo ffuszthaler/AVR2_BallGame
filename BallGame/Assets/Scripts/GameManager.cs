@@ -136,14 +136,14 @@ public class GameManager : MonoBehaviour
     }
 
     // maybe call this from main menu?
-    public void ResetAllScores()
-    {
-        winCount = 0;
-        lossCount = 0;
-        PlayerPrefs.DeleteKey(WIN_COUNT_KEY);
-        PlayerPrefs.DeleteKey(LOSS_COUNT_KEY);
-        PlayerPrefs.Save();
-        UpdateScoreDisplay();
-        Debug.Log("GameManager: All scores reset.");
-    }
+    // public void ResetAllScores()
+    // {
+    //     winCount = 0;
+    //     lossCount = 0;
+    //     PlayerPrefs.DeleteKey(WIN_COUNT_KEY);
+    //     PlayerPrefs.DeleteKey(LOSS_COUNT_KEY);
+    //     PlayerPrefs.Save();
+    //     UpdateScoreDisplay();
+    //     Debug.Log("GameManager: All scores reset.");
+    // }
 }
